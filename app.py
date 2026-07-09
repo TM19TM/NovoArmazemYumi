@@ -2,6 +2,7 @@
 import flet as ft
 import pandas as pd
 import os
+# AQUI: Importamos a função do arquivo drive_service.py
 from drive_service import fazer_upload_foto 
 
 EXCEL_FILE = "armazem_yumi_v2.xlsx"
@@ -38,8 +39,9 @@ def main(page: ft.Page):
     caminho_foto_selecionada = "foto_temporaria.jpg" 
 
     def salvar_no_excel(e):
+        # CORREÇÃO: Adicionado content= no SnackBar
         if not txt_personagem.value or not txt_preco.value:
-            page.snack_bar = ft.SnackBar(ft.Text("Por favor, preencha os campos obrigatórios!"))
+            page.snack_bar = ft.SnackBar(content=ft.Text("Por favor, preencha os campos obrigatórios!"))
             page.snack_bar.open = True
             page.update()
             return
@@ -51,7 +53,8 @@ def main(page: ft.Page):
         # 1º PASSO: Envia a foto para o Drive antes de salvar no Excel
         link_da_foto = "Sem Foto"
         if os.path.exists(caminho_foto_selecionada):
-            page.snack_bar = ft.SnackBar(ft.Text("Enviando foto para o Google Drive..."))
+            # CORREÇÃO: Adicionado content= no SnackBar
+            page.snack_bar = ft.SnackBar(content=ft.Text("Enviando foto para o Google Drive..."))
             page.snack_bar.open = True
             page.update()
             
@@ -72,7 +75,8 @@ def main(page: ft.Page):
         with pd.ExcelWriter(EXCEL_FILE, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
             df.to_excel(writer, sheet_name="Produtos", index=False)
             
-        page.snack_bar = ft.SnackBar(ft.Text(f"✨ {txt_personagem.value} cadastrado com sucesso!"))
+        # CORREÇÃO: Adicionado content= no SnackBar
+        page.snack_bar = ft.SnackBar(content=ft.Text(f"✨ {txt_personagem.value} cadastrado com sucesso!"))
         page.snack_bar.open = True
         
         txt_personagem.value = ""
