@@ -1,9 +1,7 @@
 # app.py
 import flet as ft
-from flet import colors
 import pandas as pd
 import os
-# AQUI: Importamos a função do arquivo drive_service.py
 from drive_service import fazer_upload_foto 
 
 EXCEL_FILE = "armazem_yumi_v2.xlsx"
@@ -37,7 +35,6 @@ def main(page: ft.Page):
     txt_preco = ft.TextField(label="Preço de Venda (R$)", border_radius=15, border_color=COR_PRINCIPAL, keyboard_type=ft.KeyboardType.NUMBER)
     
     # Variável temporária para simular a foto selecionada no celular
-    # Na interface completa, usaremos o componente FilePicker do Flet para abrir a galeria
     caminho_foto_selecionada = "foto_temporaria.jpg" 
 
     def salvar_no_excel(e):
@@ -58,7 +55,6 @@ def main(page: ft.Page):
             page.snack_bar.open = True
             page.update()
             
-            # Chama a função do segundo código!
             link_da_foto = fazer_upload_foto(caminho_foto_selecionada, nome_arquivo_drive)
         
         # 2º PASSO: Insere a linha no Excel incluindo o link retornado pelo Drive
@@ -86,7 +82,12 @@ def main(page: ft.Page):
 
     btn_salvar = ft.ElevatedButton(
         text="Cadastrar Escultura 🎨",
-        style=ft.ButtonStyle(color=ft.colors.WHITE, bgcolor=COR_PRINCIPAL, shape=ft.RoundedRectangleBorder(radius=15), padding=18),
+        style=ft.ButtonStyle(
+            color="white", 
+            bgcolor=COR_PRINCIPAL, 
+            shape=ft.RoundedRectangleBorder(radius=15), 
+            padding=18
+        ),
         on_click=salvar_no_excel
     )
 
@@ -102,7 +103,7 @@ def main(page: ft.Page):
                 txt_preco,
                 ft.Row([btn_salvar], alignment=ft.MainAxisAlignment.CENTER)
             ], spacing=20),
-            padding=20, bgcolor=ft.colors.WHITE, border_radius=25, border=ft.border.all(2, COR_SECUNDARIA),
+            padding=20, bgcolor="white", border_radius=25, border=ft.border.all(2, COR_SECUNDARIA),
             shadow=ft.BoxShadow(blur_radius=10, color="#E0E0E0", offset=ft.Offset(0, 5))
         )
     )
